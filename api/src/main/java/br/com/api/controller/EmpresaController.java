@@ -1,6 +1,7 @@
 package br.com.api.controller;
 
 import br.com.api.models.Empresa;
+import br.com.api.models.Holerite;
 import br.com.api.repository.EmpresaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,10 @@ public class EmpresaController {
         if(empresaOptional.isEmpty()){
             return ResponseEntity.notFound().build();
         }
+
+        Holerite holerite = new Holerite();
+
+        holerite.getCabecalho().getCod();
 
         return ResponseEntity.status(HttpStatus.OK).body(empresaOptional.get());
     }
