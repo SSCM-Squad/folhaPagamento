@@ -1,0 +1,1 @@
+INSERT INTO empresas (cnpj, razao_social) VALUES ("123456789","XP_INC")
