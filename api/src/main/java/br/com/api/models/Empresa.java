@@ -1,6 +1,7 @@
 package br.com.api.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "empresas")
@@ -13,6 +14,9 @@ public class Empresa {
     private String razaoSocial;
 
     private String cnpj;
+
+    @OneToMany(mappedBy = "empresa")
+    private List<Funcionario> funcionarios;
 
     public Long getId() {
         return id;
@@ -36,5 +40,13 @@ public class Empresa {
 
     public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
+    }
+
+    public List<Funcionario> getFuncionarios() {
+        return funcionarios;
+    }
+
+    public void setFuncionarios(List<Funcionario> funcionarios) {
+        this.funcionarios = funcionarios;
     }
 }

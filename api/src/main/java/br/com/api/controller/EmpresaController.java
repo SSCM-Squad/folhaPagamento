@@ -29,9 +29,9 @@ public class EmpresaController {
             return ResponseEntity.notFound().build();
         }
 
-        Holerite holerite = new Holerite();
+        /*Holerite holerite = new Holerite();
 
-        holerite.getCabecalho().getCod();
+        holerite.getCabecalho().getCod();*/
 
         return ResponseEntity.status(HttpStatus.OK).body(empresaOptional.get());
     }
