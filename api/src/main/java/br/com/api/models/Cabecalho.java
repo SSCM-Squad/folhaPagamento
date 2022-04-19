@@ -1,10 +1,15 @@
 package br.com.api.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.Embeddable;
 import java.time.LocalDate;
 
 @Embeddable
 public class Cabecalho {
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate data;
 
     private String cod;
 
@@ -16,7 +21,6 @@ public class Cabecalho {
 
     private String cargoFuncionario;
 
-    private LocalDate data;
 
     public String getCod() {
         return cod;
@@ -24,14 +28,6 @@ public class Cabecalho {
 
     public void setCod(String cod) {
         this.cod = cod;
-    }
-
-    public LocalDate getData() {
-        return data;
-    }
-
-    public void setData(LocalDate data) {
-        this.data = data;
     }
 
     public String getNomeEmpresa() {
@@ -64,5 +60,13 @@ public class Cabecalho {
 
     public void setCargoFuncionario(String cargoFuncionario) {
         this.cargoFuncionario = cargoFuncionario;
+    }
+
+    public LocalDate getData() {
+        return data;
+    }
+
+    public void setData(LocalDate data) {
+        this.data = data;
     }
 }

@@ -36,19 +36,6 @@ public class EmpresaController {
         return ResponseEntity.status(HttpStatus.OK).body(empresaOptional.get());
     }
 
-    @PostMapping("/cadastrar-funcionario")
-    @Transactional
-    public ResponseEntity<Funcionario> cadastrarFuncionario(@RequestBody Funcionario funcionario) {
-
-        Optional<Empresa> empresa = empresaRepository.findById(1l);
-
-        empresa.ifPresent(funcionario::setEmpresa);
-
-        Funcionario funcionarioSalvo = funcionarioRepository.save(funcionario);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(funcionarioSalvo);
-    }
-
     @GetMapping("/funcionarios")
     public ResponseEntity<List<Funcionario>> listarFuncionario() {
 
@@ -67,6 +54,19 @@ public class EmpresaController {
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(funcionarioOptional.get());
+    }
+
+    @PostMapping("/cadastrar-funcionario")
+    @Transactional
+    public ResponseEntity<Funcionario> cadastrarFuncionario(@RequestBody Funcionario funcionario) {
+
+        Optional<Empresa> empresa = empresaRepository.findById(1l);
+
+        empresa.ifPresent(funcionario::setEmpresa);
+
+        Funcionario funcionarioSalvo = funcionarioRepository.save(funcionario);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(funcionarioSalvo);
     }
 
     @PutMapping("/atualizar-funcionario/{idFuncionario}")

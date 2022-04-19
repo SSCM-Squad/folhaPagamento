@@ -1,6 +1,7 @@
 package br.com.api.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -32,11 +33,14 @@ public class Funcionario {
 
     private BigDecimal valorPlanoDeSaude;
 
+    private String cpf;
+
     @ManyToOne
-    @JsonIgnore
+    @JsonIgnoreProperties("funcionarios")
     private Empresa empresa;
 
     @OneToMany(mappedBy = "funcionario")
+    @JsonIgnore
     private List<Holerite> holerites;
 
     public Empresa getEmpresa() {
@@ -127,4 +131,19 @@ public class Funcionario {
         this.valorPlanoDeSaude = valorPlanoDeSaude;
     }
 
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public List<Holerite> getHolerites() {
+        return holerites;
+    }
+
+    public void setHolerites(List<Holerite> holerites) {
+        this.holerites = holerites;
+    }
 }
