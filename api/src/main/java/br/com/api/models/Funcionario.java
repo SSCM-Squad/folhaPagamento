@@ -1,4 +1,4 @@
-package models;
+package br.com.api.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -36,7 +36,7 @@ public class Funcionario {
     @JsonIgnore
     private Empresa empresa;
 
-    @OneToMany
+    @OneToMany(mappedBy = "funcionario")
     private List<Holerite> holerites;
 
     public Empresa getEmpresa() {

@@ -1,4 +1,4 @@
-package models;
+package br.com.api.models;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

@@ -1,4 +1,4 @@
-package models;
+package br.com.api.models;
 
 import javax.persistence.Embeddable;
 import java.time.LocalDate;
@@ -7,9 +7,13 @@ import java.time.LocalDate;
 public class Cabecalho {
 
     private String cod;
+
     private String nomeEmpresa;
+
     private String cnpjEmpresa;
+
     private String nomeFuncionario;
+
     private String cargoFuncionario;
 
     private LocalDate data;

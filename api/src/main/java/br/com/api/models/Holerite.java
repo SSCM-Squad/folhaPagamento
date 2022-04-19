@@ -1,4 +1,6 @@
-package models;
+package br.com.api.models;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.List;
@@ -15,6 +17,7 @@ public class Holerite {
     private Cabecalho cabecalho;
 
     @OneToMany(mappedBy = "holerite")
+    @JsonIgnoreProperties("holerite")
     private List<Detalhe> detalhes;
 
     @Embedded
