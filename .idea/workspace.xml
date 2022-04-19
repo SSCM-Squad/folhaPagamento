@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="25cb2b13-7e65-427f-91ee-772993862ae8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/models/Cabecalho.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/models/Detalhe.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/br/com/api/controller/EmpresaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/br/com/api/controller/EmpresaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/br/com/api/models/Cabecalho.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/br/com/api/models/Detalhe.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/br/com/api/models/Empresa.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/models/Empresa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/br/com/api/models/Funcionario.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/models/Funcionario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/br/com/api/models/Holerite.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/models/Holerite.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/br/com/api/repository/EmpresaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/br/com/api/repository/EmpresaRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/br/com/api/repository/FuncionarioRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/br/com/api/repository/FuncionarioRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/resources/import.sql" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/resources/import.sql" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Interface" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JpbToolWindowState">
+    <option name="myId2FirstActivated">
+      <map>
+        <entry key="com.haulmont.jpb.jpaInspector" value="true" />
+        <entry key="com.haulmont.jpb.jpaPalette" value="true" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="true" />
+      </map>
+    </option>
+    <option name="myId2Visible">
+      <map>
+        <entry key="com.haulmont.jpb.jpaInspector" value="false" />
+        <entry key="com.haulmont.jpb.jpaPalette" value="false" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="false" />
+      </map>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="27yUb6NCLW5F2mM8NtwNmBvAy3b" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Curso-Java-Cod3r/campoMinado" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RunManager">
+    <configuration name="ApiApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <envs>
+        <env name="DB_URL" value="jdbc:mysql://localhost:3306/api_pagamento?createDatabaseIfNotExist=true&amp;useTimezone=true&amp;serverTimezone=America/Sao_Paulo" />
+        <env name="DB_USERNAME" value="root" />
+        <env name="DB_PASSWORD" value="larissa22" />
+      </envs>
+      <option name="MAIN_CLASS_NAME" value="br.com.api.ApiApplication" />
+      <module name="api" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="br.com.api.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <extension name="software.aws.toolkits.jetbrains.core.execution.JavaAwsConnectionExtension">
+        <option name="credential" />
+        <option name="region" />
+        <option name="useCurrentConnection" value="false" />
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.ApiApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="25cb2b13-7e65-427f-91ee-772993862ae8" name="Changes" comment="" />
+      <created>1650291888311</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1650291888311</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.sql" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
