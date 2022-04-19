@@ -1,10 +1,10 @@
-package br.com.api.models;
+package models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 @Table(name = "funcionarios")
@@ -35,6 +35,9 @@ public class Funcionario {
     @ManyToOne
     @JsonIgnore
     private Empresa empresa;
+
+    @OneToMany
+    private List<Holerite> holerites;
 
     public Empresa getEmpresa() {
         return empresa;

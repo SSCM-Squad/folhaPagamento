@@ -1,11 +1,8 @@
 package br.com.api.controller;
 
-import br.com.api.models.Empresa;
-import br.com.api.models.Funcionario;
-<<<<<<< HEAD
-import br.com.api.models.Holerite;
-=======
->>>>>>> dominio-empresa
+import models.Empresa;
+import models.Funcionario;
+
 import br.com.api.repository.EmpresaRepository;
 import br.com.api.repository.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;

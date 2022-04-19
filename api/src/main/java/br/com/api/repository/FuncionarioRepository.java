@@ -1,6 +1,6 @@
 package br.com.api.repository;
 
-import br.com.api.models.Funcionario;
+import models.Funcionario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
