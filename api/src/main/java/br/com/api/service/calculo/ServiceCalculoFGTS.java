@@ -1,8 +1,5 @@
 package br.com.api.service.calculo;
 
-import org.springframework.stereotype.Service;
-
-@Service
 public class ServiceCalculoFGTS {
 
     private double salarioBruto;
