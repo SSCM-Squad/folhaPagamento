@@ -5,6 +5,7 @@ import br.com.api.models.Funcionario;
 
 import br.com.api.repository.EmpresaRepository;
 import br.com.api.repository.FuncionarioRepository;
+import br.com.api.service.funcionario.ServiceFuncionario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,9 @@ public class EmpresaController {
 
     @Autowired
     private FuncionarioRepository funcionarioRepository;
+
+    @Autowired
+    private ServiceFuncionario serviceFuncionario;
 
     @GetMapping("/{idEmpresa}")
     public ResponseEntity<Empresa> buscarEmpresa(@PathVariable Long idEmpresa){
@@ -72,7 +76,7 @@ public class EmpresaController {
 
     @PutMapping("/atualizar-funcionario/{idFuncionario}")
     @Transactional
-    public ResponseEntity<Funcionario> atualizarFuncionario(@RequestBody Funcionario funcionario,
+    public ResponseEntity<Funcionario> atualizarFuncionario(@RequestBody Funcionario funcionarioAtualizado,
                                                             @PathVariable Long idFuncionario) {
 
         Optional<Funcionario> funcionarioBuscado = funcionarioRepository.findById(idFuncionario);
@@ -81,19 +85,7 @@ public class EmpresaController {
             return ResponseEntity.notFound().build();
         }
 
-        Funcionario funcionario1 = funcionarioBuscado.get();
-
-        funcionario1.setNome(funcionario.getNome());
-        funcionario1.setSalario(funcionario.getSalario());
-        funcionario1.setFuncao(funcionario.getFuncao());
-        funcionario1.setAdicionalPericulosidade(funcionario.getAdicionalPericulosidade());
-        funcionario1.setJornadaDeTrabalho(funcionario.getJornadaDeTrabalho());
-        funcionario1.setHorasExtras(funcionario.getHorasExtras());
-        funcionario1.setDependentes(funcionario.getDependentes());
-        funcionario1.setAjudaDeCusto(funcionario.getAjudaDeCusto());
-        funcionario1.setValorPlanoDeSaude(funcionario.getValorPlanoDeSaude());
-
-        Funcionario funcionarioSalvo = funcionarioRepository.save(funcionario1);
+        Funcionario funcionarioSalvo = serviceFuncionario.atualizarFuncionario(funcionarioBuscado.get(), funcionarioAtualizado);
 
         return ResponseEntity.status(HttpStatus.OK).body(funcionarioSalvo);
     }
