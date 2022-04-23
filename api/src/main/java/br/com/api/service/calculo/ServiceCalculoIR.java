@@ -1,27 +1,28 @@
 package br.com.api.service.calculo;
 
+import java.math.BigDecimal;
+
 public class ServiceCalculoIR {
 
-    double valorDependente = 189.59;
-    private final double[] aliquota = { 0.075, 0.15, 0.225, 0.275 };
-    private final double[] deducao = { 142.80, 354.80, 636.13, 869.36 };
+	BigDecimal valorDependente = new BigDecimal("189.59");
+    private final BigDecimal[] aliquota = {new BigDecimal("0.075"), new BigDecimal("0.15"), new BigDecimal("0.225"), new BigDecimal("0.275") };
+    private final BigDecimal[] deducao = {new BigDecimal("142.80") ,new BigDecimal("354.80") ,new BigDecimal("636.13") ,new BigDecimal("869.36")  };
 
-    double calculoIR(double salarioMenosINSS, int qtdDependentes, double outrosDescontos, double pensaoAlimenticia,
-                     double previdenciaSocial) {
+    BigDecimal calculoIR(BigDecimal salarioMenosINSS, BigDecimal qtdDependentes, BigDecimal outrosDescontos, BigDecimal pensaoAlimenticia,
+    		BigDecimal previdenciaSocial) {
 
-        double salarioBaseIR = salarioMenosINSS - (valorDependente * qtdDependentes) - outrosDescontos
-                - pensaoAlimenticia - previdenciaSocial;
+        BigDecimal salarioBaseIR = salarioMenosINSS.subtract(valorDependente.multiply(qtdDependentes) ).subtract(outrosDescontos).subtract(pensaoAlimenticia).subtract(previdenciaSocial);
 
-        if (salarioBaseIR <= 1900) {
-            return 0;
-        } else if (salarioBaseIR >= 1900.01 && salarioBaseIR <= 2800.00) {
-            return salarioBaseIR * aliquota[0] - deducao[0];
-        } else if (salarioBaseIR >= 2800.01 && salarioBaseIR <= 3751.00) {
-            return salarioBaseIR * aliquota[1] - deducao[1];
-        } else if (salarioBaseIR >= 3751.01 && salarioBaseIR <= 4664.00) {
-            return salarioBaseIR * aliquota[2] - deducao[2];
+        if (salarioBaseIR.compareTo(new BigDecimal("1900")) <= 0) {
+            return BigDecimal.ZERO;
+        } else if (salarioBaseIR.compareTo(new BigDecimal("1900.01")) >= 0 && salarioBaseIR.compareTo(new BigDecimal("2800.00")) <= 0) {
+        	return salarioBaseIR.multiply(aliquota[0]).subtract(deducao[0]);
+        } else if (salarioBaseIR.compareTo(new BigDecimal("2800.01")) >= 0 && salarioBaseIR.compareTo(new BigDecimal("3751.00")) <= 0) {
+        	return salarioBaseIR.multiply(aliquota[1]).subtract(deducao[1]);
+        } else if (salarioBaseIR.compareTo(new BigDecimal("3751.01")) >= 0 && salarioBaseIR.compareTo(new BigDecimal("4664.00")) <= 0) {
+            return salarioBaseIR.multiply(aliquota[2]).subtract(deducao[2]);
         } else {
-            return salarioBaseIR * aliquota[3] - deducao[3];
+        	return salarioBaseIR.multiply(aliquota[3]).subtract(deducao[3]);
         }
     }
 
