@@ -14,6 +14,7 @@ public class ServiceCalculoIR {
 
     public HashMap<String,BigDecimal> calculoIR(BigDecimal totalVtMenosINSS, int qtdDependentes, BigDecimal outrosDescontos, BigDecimal pensaoAlimenticia,
     		BigDecimal previdenciaSocial) {
+    	
     	HashMap<String,BigDecimal> valorEAliquota = new HashMap<>();
     	
         this.salarioBaseIR = totalVtMenosINSS.subtract(valorDependente.multiply(new BigDecimal(qtdDependentes)) ).subtract(outrosDescontos).subtract(pensaoAlimenticia).subtract(previdenciaSocial);
