@@ -1,5 +1,7 @@
 package br.com.api.controller;
 
+import br.com.api.dto.DTOEmpresa;
+import br.com.api.dto.DTOFuncionarioSimples;
 import br.com.api.models.Empresa;
 import br.com.api.models.Funcionario;
 
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/empresas")
@@ -30,7 +33,7 @@ public class EmpresaController {
     private ServiceFuncionario serviceFuncionario;
 
     @GetMapping("/{idEmpresa}")
-    public ResponseEntity<Empresa> buscarEmpresa(@PathVariable Long idEmpresa){
+    public ResponseEntity<DTOEmpresa> buscarEmpresa(@PathVariable Long idEmpresa){
 
         Optional<Empresa> empresaOptional = empresaRepository.findById(idEmpresa);
 
@@ -38,15 +41,18 @@ public class EmpresaController {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(empresaOptional.get());
+        return ResponseEntity.status(HttpStatus.OK).body(new DTOEmpresa(empresaOptional.get()));
     }
 
     @GetMapping("/funcionarios")
-    public ResponseEntity<List<Funcionario>> listarFuncionario() {
+    public ResponseEntity<List<DTOFuncionarioSimples>> listarFuncionario() {
 
         List<Funcionario> funcionarios = funcionarioRepository.findAll();
 
-        return ResponseEntity.status(HttpStatus.OK).body(funcionarios);
+        List<DTOFuncionarioSimples> dtofuncionarios = funcionarios.stream()
+                .map(funcionario -> new DTOFuncionarioSimples(funcionario)).collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(dtofuncionarios);
     }
 
     @GetMapping("funcionario/{idFuncionario}")
