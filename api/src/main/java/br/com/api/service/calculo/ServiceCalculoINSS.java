@@ -6,8 +6,6 @@ import java.util.Map;
 
 public class ServiceCalculoINSS {
 	
-//	private final Map<String, BigDecimal> mapaDeducao = this.inciarValoresDeducao();
-//	private final Map<String, BigDecimal> mapaAliquota = this.inciarValoresAliquota();
 	HashMap<String,BigDecimal> mapaDeducao = new HashMap<>();
 	HashMap<String,BigDecimal> mapaAliquota = new HashMap<>();
 
