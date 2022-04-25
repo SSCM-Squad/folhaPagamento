@@ -26,6 +26,7 @@ public class ServiceHolerite {
 
 	@Autowired
 	private HoleriteRepository holeriteRepository;
+	private BigDecimal salarioBaseIR;
 
 	public Holerite gerarHolerite(Funcionario funcionario, LocalDate data) {
 		Holerite holerite = new Holerite();
@@ -37,6 +38,8 @@ public class ServiceHolerite {
 		detalhes.addAll(montarDetalhesDesconto(funcionario, detalhes));
 
 		holerite.setDetalhes(detalhes);
+		
+		detalhes.forEach(detalhe -> detalhe.setHolerite(holerite));
 		
 		holerite.setRodape(montarRodape(funcionario, detalhes));
 		
@@ -59,11 +62,10 @@ public class ServiceHolerite {
 	private List<Detalhe> montarDetalhesVencimento(Funcionario funcionario) {
 
 		BigDecimal valorVencimentoPericulosidade = funcionario.getSalario().multiply(funcionario.getAdicionalPericulosidade());
-		BigDecimal valorDaHora = funcionario.getSalario().divide(new BigDecimal(funcionario.getJornadaDeTrabalho()));
-		BigDecimal vencimentoHoraExtra = valorDaHora.multiply(new BigDecimal(funcionario.getHorasExtras())).multiply(new BigDecimal("1.5"));
+		BigDecimal valorDaHora = funcionario.getSalario().divide(new BigDecimal(funcionario.getJornadaDeTrabalho()), 2, RoundingMode.HALF_UP);
+		BigDecimal vencimentoHoraExtra = valorDaHora.multiply(new BigDecimal(funcionario.getHorasExtras())).multiply(new BigDecimal("1.5")).setScale(2, RoundingMode.HALF_UP);
 		
 		Detalhe detalheSalario = new Detalhe();
-		Detalhe detalhePlanoDeSaude = new Detalhe();
 		Detalhe detalheAjudaDeCusto = new Detalhe();
 		Detalhe detalhePericulosidade = new Detalhe();
 		Detalhe detalheHorasExtraordinarias = new Detalhe();
@@ -86,15 +88,10 @@ public class ServiceHolerite {
 		detalheHorasExtraordinarias.setVencimento(vencimentoHoraExtra.setScale(2, RoundingMode.HALF_UP));
 		detalheHorasExtraordinarias.setReferencia(String.valueOf(funcionario.getHorasExtras()));
 
-		detalhePlanoDeSaude.setDescricao("Plano de Saúde");
-		detalhePlanoDeSaude.setDesconto(funcionario.getValorPlanoDeSaude());
-		detalhePlanoDeSaude.setReferencia("-");
-
 		detalhesVencimento.add(detalheSalario);
 		detalhesVencimento.add(detalheAjudaDeCusto);
 		detalhesVencimento.add(detalhePericulosidade);
 		detalhesVencimento.add(detalheHorasExtraordinarias);
-		detalhesVencimento.add(detalhePlanoDeSaude);
 
 		return detalhesVencimento;
 	}
@@ -108,32 +105,39 @@ public class ServiceHolerite {
 		BigDecimal valorINSS = calculoINSS.calcularContribuicaoINSS(totalVencimentosTributaveis);
 		BigDecimal totalVtMenosINSS = totalVencimentosTributaveis.subtract(valorINSS);
 		HashMap<String, BigDecimal> valorEAliquota = calculoIR.calculoIR(totalVtMenosINSS, funcionario.getDependentes(),BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
+		salarioBaseIR = calculoIR.getSalarioBaseIR().setScale(2, RoundingMode.HALF_UP);
 
 		Detalhe detalheINSS = new Detalhe();
 		Detalhe detalheIR = new Detalhe();
-
+		Detalhe detalhePlanoDeSaude = new Detalhe();
+		
 		List<Detalhe> detalhesDesconto = new ArrayList<>();
 
 		detalheINSS.setDescricao("INSS");
 		detalheINSS.setDesconto(valorINSS);
-		detalheINSS.setReferencia(valorINSS.divide(totalVencimentosTributaveis).multiply(new BigDecimal("100")).toString());
+		detalheINSS.setReferencia(valorINSS.divide(totalVencimentosTributaveis, 2, RoundingMode.HALF_UP).multiply(new BigDecimal("100")).setScale(2, RoundingMode.HALF_UP).toString());
 
 		detalheIR.setDescricao("IRRF");
 		detalheIR.setDesconto(valorEAliquota.entrySet().stream().map(Map.Entry::getValue).findFirst().get());
 		detalheIR.setReferencia(valorEAliquota.entrySet().stream().map(Map.Entry::getKey).findFirst().get());
 
+		detalhePlanoDeSaude.setDescricao("Plano de Saúde");
+		detalhePlanoDeSaude.setDesconto(funcionario.getValorPlanoDeSaude());
+		detalhePlanoDeSaude.setReferencia("-");
+		
 		detalhesDesconto.add(detalheINSS);
 		detalhesDesconto.add(detalheIR);
+		detalhesDesconto.add(detalhePlanoDeSaude);		
+		
 
 		return detalhesDesconto;
 	}
 	
 	private Rodape montarRodape(Funcionario funcionario, List<Detalhe> detalhes) {
 		
-		ServiceCalculoIR calculoIR = new ServiceCalculoIR();
-		
-		BigDecimal totalVencimentos = detalhes.stream().map(detalhe -> detalhe.getVencimento()).reduce(BigDecimal::add).get();
-		BigDecimal totalVencimentosTributaveis = totalVencimentos.subtract(funcionario.getAjudaDeCusto());
+		BigDecimal totalVencimentos = detalhes.stream().filter(detalhe -> detalhe.getVencimento() != null)
+				.map(detalhe -> detalhe.getVencimento()).reduce(BigDecimal::add).get().setScale(2, RoundingMode.HALF_UP);
+		BigDecimal totalVencimentosTributaveis = totalVencimentos.subtract(funcionario.getAjudaDeCusto()).setScale(2, RoundingMode.HALF_UP);
 		
 		Rodape rodape = new Rodape();
 		
@@ -144,10 +148,11 @@ public class ServiceHolerite {
 		rodape.setValorFgts(ServiceCalculoFGTS.calcularContribuicaoFGTS(totalVencimentosTributaveis, funcionario.getTipo()));
 		rodape.setValorLiquido(totalVencimentos);
 
-		BigDecimal totalDescontos = detalhes.stream().map(detalhe -> detalhe.getDesconto()).reduce(BigDecimal::add).get();
+		BigDecimal totalDescontos = detalhes.stream().filter(detalhe -> detalhe.getDesconto() != null)
+				.map(detalhe -> detalhe.getDesconto()).reduce(BigDecimal::add).get().setScale(2, RoundingMode.HALF_UP);
 		rodape.setTotalDescontos(totalDescontos);
 
-		rodape.setBaseIrpf(calculoIR.getSalarioBaseIR());
+		rodape.setBaseIrpf(salarioBaseIR);
 
 		rodape.setValorLiquido(totalVencimentos.subtract(totalDescontos));
 		

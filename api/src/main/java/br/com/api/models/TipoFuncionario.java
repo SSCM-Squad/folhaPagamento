@@ -1,7 +1,7 @@
 package br.com.api.models;
 
 public enum TipoFuncionario {
-	JovemAprendiz,
-	TrabalhadorDomestico,  
-	Colaborador
+	JOVEM_APRENDIZ,
+	TRABALHADOR_DOMESTICO,  
+	COLABORADOR
 }

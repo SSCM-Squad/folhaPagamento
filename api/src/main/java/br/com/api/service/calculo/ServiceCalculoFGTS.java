@@ -9,11 +9,11 @@ public class ServiceCalculoFGTS {
 	public static BigDecimal calcularContribuicaoFGTS(BigDecimal salarioTotalTributavel, TipoFuncionario tipo) {
 		BigDecimal contribuicaoFGTS;
 		switch (tipo) {
-		case JovemAprendiz:
+		case JOVEM_APRENDIZ:
 			return contribuicaoFGTS = salarioTotalTributavel.multiply(new BigDecimal("0.02"));
-		case TrabalhadorDomestico:
+		case TRABALHADOR_DOMESTICO:
 			return contribuicaoFGTS = salarioTotalTributavel.multiply(new BigDecimal("0.112"));
-		case Colaborador:
+		case COLABORADOR:
 			return contribuicaoFGTS = salarioTotalTributavel.multiply(new BigDecimal("0.08"));
 		default:
 			return BigDecimal.ZERO;
