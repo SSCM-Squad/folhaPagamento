@@ -61,13 +61,11 @@ public class ServiceHolerite {
 
 	private List<Detalhe> montarDetalhesVencimento(Funcionario funcionario) {
 
-		BigDecimal valorVencimentoPericulosidade = funcionario.getSalario().multiply(funcionario.getAdicionalPericulosidade());
 		BigDecimal valorDaHora = funcionario.getSalario().divide(new BigDecimal(funcionario.getJornadaDeTrabalho()), 2, RoundingMode.HALF_UP);
 		BigDecimal vencimentoHoraExtra = valorDaHora.multiply(new BigDecimal(funcionario.getHorasExtras())).multiply(new BigDecimal("1.5")).setScale(2, RoundingMode.HALF_UP);
 		
 		Detalhe detalheSalario = new Detalhe();
 		Detalhe detalheAjudaDeCusto = new Detalhe();
-		Detalhe detalhePericulosidade = new Detalhe();
 		Detalhe detalheHorasExtraordinarias = new Detalhe();
 
 		List<Detalhe> detalhesVencimento = new ArrayList<>();
@@ -80,19 +78,26 @@ public class ServiceHolerite {
 		detalheAjudaDeCusto.setVencimento(funcionario.getAjudaDeCusto());
 		detalheAjudaDeCusto.setReferencia("-");
 
-		detalhePericulosidade.setDescricao("Periculosidade");
-		detalhePericulosidade.setVencimento(valorVencimentoPericulosidade);
-		detalhePericulosidade.setReferencia("30%");
-
 		detalheHorasExtraordinarias.setDescricao("Horas Extra Ordinárias");
 		detalheHorasExtraordinarias.setVencimento(vencimentoHoraExtra.setScale(2, RoundingMode.HALF_UP));
 		detalheHorasExtraordinarias.setReferencia(String.valueOf(funcionario.getHorasExtras()));
 
 		detalhesVencimento.add(detalheSalario);
 		detalhesVencimento.add(detalheAjudaDeCusto);
-		detalhesVencimento.add(detalhePericulosidade);
+
 		detalhesVencimento.add(detalheHorasExtraordinarias);
 
+		if(funcionario.isAdicionalPericulosidade()) {
+			BigDecimal valorVencimentoPericulosidade = funcionario.getSalario().multiply(new BigDecimal("0.3")).setScale(2, RoundingMode.HALF_UP);
+			Detalhe detalhePericulosidade = new Detalhe();
+			
+			detalhePericulosidade.setDescricao("Periculosidade");
+			detalhePericulosidade.setVencimento(valorVencimentoPericulosidade);
+			detalhePericulosidade.setReferencia("30%");
+			
+			detalhesVencimento.add(detalhePericulosidade);
+		}
+		
 		return detalhesVencimento;
 	}
 

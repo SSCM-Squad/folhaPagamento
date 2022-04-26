@@ -21,7 +21,7 @@ public class Funcionario {
 
 	private String funcao;
 
-	private BigDecimal adicionalPericulosidade;
+	private boolean adicionalPericulosidade;
 
 	private int jornadaDeTrabalho;
 
@@ -86,11 +86,11 @@ public class Funcionario {
 		this.funcao = funcao;
 	}
 
-	public BigDecimal getAdicionalPericulosidade() {
+	public boolean isAdicionalPericulosidade() {
 		return adicionalPericulosidade;
 	}
 
-	public void setAdicionalPericulosidade(BigDecimal adicionalPericulosidade) {
+	public void setAdicionalPericulosidade(boolean adicionalPericulosidade) {
 		this.adicionalPericulosidade = adicionalPericulosidade;
 	}
 

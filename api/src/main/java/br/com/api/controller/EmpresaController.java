@@ -85,7 +85,6 @@ public class EmpresaController {
         funcionario1.setNome(funcionario.getNome());
         funcionario1.setSalario(funcionario.getSalario());
         funcionario1.setFuncao(funcionario.getFuncao());
-        funcionario1.setAdicionalPericulosidade(funcionario.getAdicionalPericulosidade());
         funcionario1.setJornadaDeTrabalho(funcionario.getJornadaDeTrabalho());
         funcionario1.setHorasExtras(funcionario.getHorasExtras());
         funcionario1.setDependentes(funcionario.getDependentes());
