@@ -73,7 +73,7 @@ public class HoleriteControllerTest {
 
     @Test
     @DisplayName("Deve retornar um Not Found ao não encontrar um holerite")
-    public void deveRetornarBadRequest() throws Exception {
+    public void deveRetornarNotFound() throws Exception {
 
         BDDMockito.given(holeriteRepository.findById(anyLong())).willReturn(Optional.empty());
 
