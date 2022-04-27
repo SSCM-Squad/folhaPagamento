@@ -41,6 +41,18 @@ public class EmpresaController {
         return ResponseEntity.status(HttpStatus.OK).body(empresaOptional.get());
     }
 
+    @GetMapping("funcionario/cpf={cpf}")
+    public ResponseEntity<Funcionario> buscarFuncionarioPorCpf(@PathVariable String cpf){
+
+        Optional<Funcionario> funcionario = funcionarioRepository.findByCpf(cpf);
+
+        if(funcionario.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(funcionario.get());
+    }
+
     @GetMapping("/funcionarios")
     public ResponseEntity<List<Funcionario>> listarFuncionario() {
 

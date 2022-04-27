@@ -16,7 +16,7 @@ public class ServiceFuncionario {
         funcionario.setNome(funcionarioAtualizado.getNome());
         funcionario.setSalario(funcionarioAtualizado.getSalario());
         funcionario.setFuncao(funcionarioAtualizado.getFuncao());
-        funcionario.setAdicionalPericulosidade(funcionarioAtualizado.getAdicionalPericulosidade());
+        funcionario.setAdicionalPericulosidade(funcionarioAtualizado.isAdicionalPericulosidade());
         funcionario.setJornadaDeTrabalho(funcionarioAtualizado.getJornadaDeTrabalho());
         funcionario.setHorasExtras(funcionarioAtualizado.getHorasExtras());
         funcionario.setDependentes(funcionarioAtualizado.getDependentes());
