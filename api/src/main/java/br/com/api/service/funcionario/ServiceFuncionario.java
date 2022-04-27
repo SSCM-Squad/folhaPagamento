@@ -1,5 +1,6 @@
 package br.com.api.service.funcionario;
 
+import br.com.api.dto.FormCadastroFuncionario;
 import br.com.api.models.Funcionario;
 import br.com.api.repository.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,7 @@ public class ServiceFuncionario {
     @Autowired
     private FuncionarioRepository funcionarioRepository;
 
-    public Funcionario atualizarFuncionario(Funcionario funcionario, Funcionario funcionarioAtualizado) {
+    public Funcionario atualizarFuncionario(Funcionario funcionario, FormCadastroFuncionario funcionarioAtualizado) {
 
         funcionario.setNome(funcionarioAtualizado.getNome());
         funcionario.setSalario(funcionarioAtualizado.getSalario());

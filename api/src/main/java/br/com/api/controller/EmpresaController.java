@@ -1,5 +1,9 @@
 package br.com.api.controller;
 
+import br.com.api.dto.DTOEmpresa;
+import br.com.api.dto.DTOFuncionarioCompleto;
+import br.com.api.dto.DTOFuncionarioSimples;
+import br.com.api.dto.FormCadastroFuncionario;
 import br.com.api.models.Empresa;
 import br.com.api.models.Funcionario;
 
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/empresas")
@@ -30,7 +35,7 @@ public class EmpresaController {
     private ServiceFuncionario serviceFuncionario;
 
     @GetMapping("/{idEmpresa}")
-    public ResponseEntity<Empresa> buscarEmpresa(@PathVariable Long idEmpresa){
+    public ResponseEntity<DTOEmpresa> buscarEmpresa(@PathVariable Long idEmpresa){
 
         Optional<Empresa> empresaOptional = empresaRepository.findById(idEmpresa);
 
@@ -38,45 +43,62 @@ public class EmpresaController {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(empresaOptional.get());
+        return ResponseEntity.status(HttpStatus.OK).body(new DTOEmpresa(empresaOptional.get()));
+    }
+
+    @GetMapping("funcionario/cpf={cpf}")
+    public ResponseEntity<Funcionario> buscarFuncionarioPorCpf(@PathVariable String cpf){
+
+        Optional<Funcionario> funcionario = funcionarioRepository.findByCpf(cpf);
+
+        if(funcionario.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(funcionario.get());
     }
 
     @GetMapping("/funcionarios")
-    public ResponseEntity<List<Funcionario>> listarFuncionario() {
+    public ResponseEntity<List<DTOFuncionarioSimples>> listarFuncionario() {
 
         List<Funcionario> funcionarios = funcionarioRepository.findAll();
 
-        return ResponseEntity.status(HttpStatus.OK).body(funcionarios);
+        List<DTOFuncionarioSimples> dtofuncionarios = funcionarios.stream()
+                .map(funcionario -> new DTOFuncionarioSimples(funcionario)).collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(dtofuncionarios);
     }
 
-    @GetMapping("funcionario/{idFuncionario}")
-    public ResponseEntity<Funcionario> buscarFuncionario(@PathVariable Long idFuncionario) {
+    @GetMapping("/funcionario/{idFuncionario}")
+    public ResponseEntity<DTOFuncionarioCompleto> buscarFuncionario(@PathVariable Long idFuncionario) {
 
         Optional<Funcionario> funcionarioOptional = funcionarioRepository.findById(idFuncionario);
 
         if (funcionarioOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+        DTOFuncionarioCompleto dtoFuncionario = new DTOFuncionarioCompleto(funcionarioOptional.get());
 
-        return ResponseEntity.status(HttpStatus.OK).body(funcionarioOptional.get());
+        return ResponseEntity.status(HttpStatus.OK).body(dtoFuncionario);
     }
 
     @PostMapping("/cadastrar-funcionario")
     @Transactional
-    public ResponseEntity<Funcionario> cadastrarFuncionario(@RequestBody Funcionario funcionario) {
+    public ResponseEntity<DTOFuncionarioCompleto> cadastrarFuncionario(@RequestBody FormCadastroFuncionario funcionarioFormulario) {
+
+        Funcionario funcionarioModelo = funcionarioFormulario.converterFormularioParaEntidade();
 
         Optional<Empresa> empresa = empresaRepository.findById(1l);
+        empresa.ifPresent(funcionarioModelo::setEmpresa);
 
-        empresa.ifPresent(funcionario::setEmpresa);
+        Funcionario funcionarioSalvo = funcionarioRepository.save(funcionarioModelo);
 
-        Funcionario funcionarioSalvo = funcionarioRepository.save(funcionario);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(funcionarioSalvo);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new DTOFuncionarioCompleto(funcionarioSalvo));
     }
 
     @PutMapping("/atualizar-funcionario/{idFuncionario}")
     @Transactional
-    public ResponseEntity<Funcionario> atualizarFuncionario(@RequestBody Funcionario funcionarioAtualizado,
+    public ResponseEntity<DTOFuncionarioCompleto> atualizarFuncionario(@RequestBody FormCadastroFuncionario funcionarioAtualizado,
                                                             @PathVariable Long idFuncionario) {
 
         Optional<Funcionario> funcionarioBuscado = funcionarioRepository.findById(idFuncionario);
@@ -87,7 +109,7 @@ public class EmpresaController {
 
         Funcionario funcionarioSalvo = serviceFuncionario.atualizarFuncionario(funcionarioBuscado.get(), funcionarioAtualizado);
 
-        return ResponseEntity.status(HttpStatus.OK).body(funcionarioSalvo);
+        return ResponseEntity.status(HttpStatus.OK).body(new DTOFuncionarioCompleto(funcionarioSalvo));
     }
 
 }

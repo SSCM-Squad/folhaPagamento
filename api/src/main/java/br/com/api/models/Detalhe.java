@@ -1,5 +1,8 @@
 package br.com.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -20,6 +23,7 @@ public class Detalhe {
     private BigDecimal vencimento;
 
     @ManyToOne
+    @JsonIgnore
     private Holerite holerite;
 
     public Long getId() {
