@@ -11,139 +11,151 @@ import java.util.List;
 @Table(name = "funcionarios")
 public class Funcionario {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    private String nome;
+	private String nome;
 
-    private BigDecimal salario;
+	private BigDecimal salario;
 
-    private String funcao;
+	private String funcao;
 
-    private BigDecimal adicionalPericulosidade;
+	private boolean adicionalPericulosidade;
 
-    private int jornadaDeTrabalho;
+	private int jornadaDeTrabalho;
 
-    private int horasExtras;
+	private int horasExtras;
 
-    private int dependentes;
+	private int dependentes;
 
-    private BigDecimal ajudaDeCusto;
+	private BigDecimal ajudaDeCusto;
 
-    private BigDecimal valorPlanoDeSaude;
+	private BigDecimal valorPlanoDeSaude;
 
-    private String cpf;
+	private String cpf;
 
-    @ManyToOne
-    @JsonIgnoreProperties("funcionarios")
-    private Empresa empresa;
+	@Enumerated(EnumType.STRING)
+	private TipoFuncionario tipo;
 
-    @OneToMany(mappedBy = "funcionario")
-    @JsonIgnore
-    private List<Holerite> holerites;
+	@ManyToOne
+	@JsonIgnoreProperties("funcionarios")
+	private Empresa empresa;
 
-    public Empresa getEmpresa() {
-        return empresa;
-    }
+	@OneToMany(mappedBy = "funcionario")
+	@JsonIgnore
+	private List<Holerite> holerites;
 
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
-    }
+	public Empresa getEmpresa() {
+		return empresa;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getNome() {
-        return nome;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	public String getNome() {
+		return nome;
+	}
 
-    public BigDecimal getSalario() {
-        return salario;
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-    public void setSalario(BigDecimal salario) {
-        this.salario = salario;
-    }
+	public BigDecimal getSalario() {
+		return salario;
+	}
 
-    public String getFuncao() {
-        return funcao;
-    }
+	public void setSalario(BigDecimal salario) {
+		this.salario = salario;
+	}
 
-    public void setFuncao(String funcao) {
-        this.funcao = funcao;
-    }
+	public String getFuncao() {
+		return funcao;
+	}
 
-    public BigDecimal getAdicionalPericulosidade() {
-        return adicionalPericulosidade;
-    }
+	public void setFuncao(String funcao) {
+		this.funcao = funcao;
+	}
 
-    public void setAdicionalPericulosidade(BigDecimal adicionalPericulosidade) {
-        this.adicionalPericulosidade = adicionalPericulosidade;
-    }
+	public boolean isAdicionalPericulosidade() {
+		return adicionalPericulosidade;
+	}
 
-    public int getJornadaDeTrabalho() {
-        return jornadaDeTrabalho;
-    }
+	public void setAdicionalPericulosidade(boolean adicionalPericulosidade) {
+		this.adicionalPericulosidade = adicionalPericulosidade;
+	}
 
-    public void setJornadaDeTrabalho(int jornadaDeTrabalho) {
-        this.jornadaDeTrabalho = jornadaDeTrabalho;
-    }
+	public int getJornadaDeTrabalho() {
+		return jornadaDeTrabalho;
+	}
 
-    public int getHorasExtras() {
-        return horasExtras;
-    }
+	public void setJornadaDeTrabalho(int jornadaDeTrabalho) {
+		this.jornadaDeTrabalho = jornadaDeTrabalho;
+	}
 
-    public void setHorasExtras(int horasExtras) {
-        this.horasExtras = horasExtras;
-    }
+	public int getHorasExtras() {
+		return horasExtras;
+	}
 
-    public int getDependentes() {
-        return dependentes;
-    }
+	public void setHorasExtras(int horasExtras) {
+		this.horasExtras = horasExtras;
+	}
 
-    public void setDependentes(int dependentes) {
-        this.dependentes = dependentes;
-    }
+	public int getDependentes() {
+		return dependentes;
+	}
 
-    public BigDecimal getAjudaDeCusto() {
-        return ajudaDeCusto;
-    }
+	public void setDependentes(int dependentes) {
+		this.dependentes = dependentes;
+	}
 
-    public void setAjudaDeCusto(BigDecimal ajudaDeCusto) {
-        this.ajudaDeCusto = ajudaDeCusto;
-    }
+	public BigDecimal getAjudaDeCusto() {
+		return ajudaDeCusto;
+	}
 
-    public BigDecimal getValorPlanoDeSaude() {
-        return valorPlanoDeSaude;
-    }
+	public void setAjudaDeCusto(BigDecimal ajudaDeCusto) {
+		this.ajudaDeCusto = ajudaDeCusto;
+	}
 
-    public void setValorPlanoDeSaude(BigDecimal valorPlanoDeSaude) {
-        this.valorPlanoDeSaude = valorPlanoDeSaude;
-    }
+	public BigDecimal getValorPlanoDeSaude() {
+		return valorPlanoDeSaude;
+	}
 
-    public String getCpf() {
-        return cpf;
-    }
+	public void setValorPlanoDeSaude(BigDecimal valorPlanoDeSaude) {
+		this.valorPlanoDeSaude = valorPlanoDeSaude;
+	}
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
+	public String getCpf() {
+		return cpf;
+	}
 
-    public List<Holerite> getHolerites() {
-        return holerites;
-    }
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
 
-    public void setHolerites(List<Holerite> holerites) {
-        this.holerites = holerites;
-    }
+	public List<Holerite> getHolerites() {
+		return holerites;
+	}
+
+	public void setHolerites(List<Holerite> holerites) {
+		this.holerites = holerites;
+	}
+
+	public TipoFuncionario getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoFuncionario tipo) {
+		this.tipo = tipo;
+	}
+
 }

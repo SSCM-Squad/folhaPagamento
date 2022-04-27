@@ -16,7 +16,7 @@ public class Holerite {
     @Embedded
     private Cabecalho cabecalho;
 
-    @OneToMany(mappedBy = "holerite")
+    @OneToMany(mappedBy = "holerite", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("holerite")
     private List<Detalhe> detalhes;
 
