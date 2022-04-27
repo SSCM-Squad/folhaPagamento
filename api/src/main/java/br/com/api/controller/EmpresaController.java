@@ -1,6 +1,7 @@
 package br.com.api.controller;
 
 import br.com.api.dto.DTOEmpresa;
+import br.com.api.dto.DTOFuncionarioCompleto;
 import br.com.api.dto.DTOFuncionarioSimples;
 import br.com.api.models.Empresa;
 import br.com.api.models.Funcionario;
@@ -55,16 +56,17 @@ public class EmpresaController {
         return ResponseEntity.status(HttpStatus.OK).body(dtofuncionarios);
     }
 
-    @GetMapping("funcionario/{idFuncionario}")
-    public ResponseEntity<Funcionario> buscarFuncionario(@PathVariable Long idFuncionario) {
+    @GetMapping("/funcionario/{idFuncionario}")
+    public ResponseEntity<DTOFuncionarioCompleto> buscarFuncionario(@PathVariable Long idFuncionario) {
 
         Optional<Funcionario> funcionarioOptional = funcionarioRepository.findById(idFuncionario);
 
         if (funcionarioOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+        DTOFuncionarioCompleto dtoFuncionario = new DTOFuncionarioCompleto(funcionarioOptional.get());
 
-        return ResponseEntity.status(HttpStatus.OK).body(funcionarioOptional.get());
+        return ResponseEntity.status(HttpStatus.OK).body(dtoFuncionario);
     }
 
     @PostMapping("/cadastrar-funcionario")
