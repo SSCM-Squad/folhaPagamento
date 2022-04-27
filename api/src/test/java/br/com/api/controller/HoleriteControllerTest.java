@@ -18,6 +18,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.*;
@@ -57,5 +61,49 @@ public class HoleriteControllerTest {
         mockMvc.perform(request)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("funcionario").isNotEmpty());
+    }
+
+    @Test
+    @DisplayName("Deve retornar uma lista de holerite buscado pelo CPF")
+    public void deveRetornarListaHoleritePorCpf() throws Exception {
+
+        Holerite holerite = new Holerite();
+        holerite.setId(1L);
+
+        Funcionario funcionario = new Funcionario();
+        holerite.setFuncionario(funcionario);
+
+        List<Holerite> holerites = new ArrayList<>(List.of(holerite));
+
+        BDDMockito.given(holeriteRepository.findAllByFuncionarioCpf(anyString())).willReturn(holerites);
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .get(HOLERITE_URI +"/consultar-holerites/" + "1234")
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(request)
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("Deve retornar um holerite buscado pelo CPF e data")
+    public void deveRetornarHoleritePorCpfEData() throws Exception {
+
+        Holerite holerite = new Holerite();
+        holerite.setId(1L);
+
+        Funcionario funcionario = new Funcionario();
+        holerite.setFuncionario(funcionario);
+
+        BDDMockito.given(holeriteRepository.buscarHolerite(anyString(), any(LocalDate.class))).willReturn(Optional.of(holerite));
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .get(HOLERITE_URI +"/consultar-holerite/cpf=1234&data=2022-03-01/")
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("id").value(1L));
+
     }
 }

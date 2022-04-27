@@ -103,7 +103,7 @@ public class EmpresaControllerTest {
         funcionario.setCpf("54897563285");
         funcionario.setNome("Angela");
         funcionario.setFuncao("Função teste");
-        funcionario.setAdicionalPericulosidade(BigDecimal.valueOf(1));
+        funcionario.setAdicionalPericulosidade(true);
         funcionario.setAjudaDeCusto(BigDecimal.valueOf(0));
         funcionario.setSalario(BigDecimal.valueOf(15000));
         funcionario.setJornadaDeTrabalho(8);
@@ -125,7 +125,7 @@ public class EmpresaControllerTest {
                 .andExpect(jsonPath("funcao").value("Função teste"))
                 .andExpect(jsonPath("salario").value(15000))
                 .andExpect(jsonPath("empresa").isNotEmpty())
-                .andExpect(jsonPath("adicionalPericulosidade").value(1))
+                .andExpect(jsonPath("adicionalPericulosidade").isBoolean())
                 .andExpect(jsonPath("ajudaDeCusto").value(0));
     }
 
@@ -140,7 +140,7 @@ public class EmpresaControllerTest {
         funcionario.setCpf("54897563285");
         funcionario.setNome("Angela");
         funcionario.setFuncao("Função teste");
-        funcionario.setAdicionalPericulosidade(BigDecimal.valueOf(1));
+        funcionario.setAdicionalPericulosidade(true);
         funcionario.setAjudaDeCusto(BigDecimal.valueOf(0));
         funcionario.setSalario(BigDecimal.valueOf(15000));
         funcionario.setJornadaDeTrabalho(8);
@@ -166,7 +166,7 @@ public class EmpresaControllerTest {
                 .andExpect(jsonPath("funcao").value("Função teste"))
                 .andExpect(jsonPath("salario").value(15000))
                 .andExpect(jsonPath("empresa").isNotEmpty())
-                .andExpect(jsonPath("adicionalPericulosidade").value(1))
+                .andExpect(jsonPath("adicionalPericulosidade").isBoolean())
                 .andExpect(jsonPath("ajudaDeCusto").value(0));
     }
 
@@ -181,7 +181,7 @@ public class EmpresaControllerTest {
         funcionario.setCpf("54897563285");
         funcionario.setNome("Angela");
         funcionario.setFuncao("Função teste");
-        funcionario.setAdicionalPericulosidade(BigDecimal.valueOf(1));
+        funcionario.setAdicionalPericulosidade(true);
         funcionario.setAjudaDeCusto(BigDecimal.valueOf(0));
         funcionario.setSalario(BigDecimal.valueOf(15000));
         funcionario.setJornadaDeTrabalho(8);
@@ -208,7 +208,7 @@ public class EmpresaControllerTest {
                 .andExpect(jsonPath("funcao").value("Função teste"))
                 .andExpect(jsonPath("salario").value(15000))
                 .andExpect(jsonPath("empresa").isNotEmpty())
-                .andExpect(jsonPath("adicionalPericulosidade").value(1))
+                .andExpect(jsonPath("adicionalPericulosidade").isBoolean())
                 .andExpect(jsonPath("ajudaDeCusto").value(0));
     }
 }
