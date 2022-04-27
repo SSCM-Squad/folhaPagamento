@@ -2,7 +2,9 @@ package br.com.api.controller;
 
 import br.com.api.models.Funcionario;
 import br.com.api.models.Holerite;
+import br.com.api.repository.FuncionarioRepository;
 import br.com.api.repository.HoleriteRepository;
+import br.com.api.service.holerite.ServiceHolerite;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,6 +44,12 @@ public class HoleriteControllerTest {
     @MockBean
     HoleriteRepository holeriteRepository;
 
+    @MockBean
+    FuncionarioRepository funcionarioRepository;
+
+    @MockBean
+    ServiceHolerite serviceHolerite;
+
     @Test
     @DisplayName("Deve retornar um holerite buscado pelo ID")
     public void deveRetornarHolerite() throws Exception {
@@ -61,6 +69,20 @@ public class HoleriteControllerTest {
         mockMvc.perform(request)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("funcionario").isNotEmpty());
+    }
+
+    @Test
+    @DisplayName("Deve retornar um Not Found ao não encontrar um holerite")
+    public void deveRetornarBadRequest() throws Exception {
+
+        BDDMockito.given(holeriteRepository.findById(anyLong())).willReturn(Optional.empty());
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .get(HOLERITE_URI +"/" + 1L)
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(request)
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -98,12 +120,36 @@ public class HoleriteControllerTest {
         BDDMockito.given(holeriteRepository.buscarHolerite(anyString(), any(LocalDate.class))).willReturn(Optional.of(holerite));
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
-                .get(HOLERITE_URI +"/consultar-holerite/cpf=1234&data=2022-03-01/")
+                .get(HOLERITE_URI +"/consultar-holerite/cpf=1234&data=2022-03-01")
                 .accept(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(request)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id").value(1L));
+    }
+
+    @Test
+    @DisplayName("Deve retornar um holerite criado pelo ID funcionário e data")
+    public void deveRetornarHoleriteGerado() throws Exception {
+
+        Holerite holerite = new Holerite();
+        holerite.setId(1L);
+
+        Funcionario funcionario = new Funcionario();
+        holerite.setFuncionario(funcionario);
+
+        BDDMockito.given(funcionarioRepository.findById(anyLong())).willReturn(Optional.of(funcionario));
+        BDDMockito.given(serviceHolerite.gerarHolerite(any(Funcionario.class), any(LocalDate.class))).willReturn(holerite);
+        BDDMockito.given(holeriteRepository.save(any(Holerite.class))).willReturn(holerite);
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .post(HOLERITE_URI +"/gerar-holerite/1&2022-03-01")
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("id").value(1L))
+                .andExpect(jsonPath("funcionario").isNotEmpty());
 
     }
 }
