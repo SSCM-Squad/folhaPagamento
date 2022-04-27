@@ -3,6 +3,7 @@ package br.com.api.controller;
 import br.com.api.dto.DTOEmpresa;
 import br.com.api.dto.DTOFuncionarioCompleto;
 import br.com.api.dto.DTOFuncionarioSimples;
+import br.com.api.dto.FormCadastroFuncionario;
 import br.com.api.models.Empresa;
 import br.com.api.models.Funcionario;
 
@@ -83,20 +84,21 @@ public class EmpresaController {
 
     @PostMapping("/cadastrar-funcionario")
     @Transactional
-    public ResponseEntity<Funcionario> cadastrarFuncionario(@RequestBody Funcionario funcionario) {
+    public ResponseEntity<DTOFuncionarioCompleto> cadastrarFuncionario(@RequestBody FormCadastroFuncionario funcionarioFormulario) {
+
+        Funcionario funcionarioModelo = funcionarioFormulario.converterFormularioParaEntidade();
 
         Optional<Empresa> empresa = empresaRepository.findById(1l);
+        empresa.ifPresent(funcionarioModelo::setEmpresa);
 
-        empresa.ifPresent(funcionario::setEmpresa);
+        Funcionario funcionarioSalvo = funcionarioRepository.save(funcionarioModelo);
 
-        Funcionario funcionarioSalvo = funcionarioRepository.save(funcionario);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(funcionarioSalvo);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new DTOFuncionarioCompleto(funcionarioSalvo));
     }
 
     @PutMapping("/atualizar-funcionario/{idFuncionario}")
     @Transactional
-    public ResponseEntity<Funcionario> atualizarFuncionario(@RequestBody Funcionario funcionarioAtualizado,
+    public ResponseEntity<DTOFuncionarioCompleto> atualizarFuncionario(@RequestBody FormCadastroFuncionario funcionarioAtualizado,
                                                             @PathVariable Long idFuncionario) {
 
         Optional<Funcionario> funcionarioBuscado = funcionarioRepository.findById(idFuncionario);
@@ -107,7 +109,7 @@ public class EmpresaController {
 
         Funcionario funcionarioSalvo = serviceFuncionario.atualizarFuncionario(funcionarioBuscado.get(), funcionarioAtualizado);
 
-        return ResponseEntity.status(HttpStatus.OK).body(funcionarioSalvo);
+        return ResponseEntity.status(HttpStatus.OK).body(new DTOFuncionarioCompleto(funcionarioSalvo));
     }
 
 }
