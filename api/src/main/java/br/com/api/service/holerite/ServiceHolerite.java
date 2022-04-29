@@ -8,18 +8,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import br.com.api.models.Cabecalho;
-import br.com.api.models.Detalhe;
-import br.com.api.models.Funcionario;
-import br.com.api.models.Holerite;
-import br.com.api.models.Rodape;
+import br.com.api.models.*;
 import br.com.api.repository.HoleriteRepository;
 import br.com.api.service.calculo.ServiceCalculoFGTS;
 import br.com.api.service.calculo.ServiceCalculoINSS;
 import br.com.api.service.calculo.ServiceCalculoIR;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+
 
 @Service
 public class ServiceHolerite {
