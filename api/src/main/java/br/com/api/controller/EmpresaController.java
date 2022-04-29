@@ -1,6 +1,7 @@
 package br.com.api.controller;
 
 import br.com.api.models.Empresa;
+import br.com.api.repository.EmpresaRepository;
 import br.com.api.models.Funcionario;
 
 import br.com.api.repository.EmpresaRepository;
