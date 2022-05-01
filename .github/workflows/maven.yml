@@ -27,5 +27,5 @@ jobs:
     - name: Upload to Codecov
       uses: codecov/codecov-action@v2.0.2
       with:
-        file: /home/runner/work/folhaPagamento/target/site/jacoco/jacoco.xml
+        file: ./api/target/site/jacoco/jacoco.xml
         flags: unittests
