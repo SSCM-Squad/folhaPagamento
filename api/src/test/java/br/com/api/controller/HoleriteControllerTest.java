@@ -1,5 +1,6 @@
 package br.com.api.controller;
 
+import br.com.api.models.Cabecalho;
 import br.com.api.models.Funcionario;
 import br.com.api.models.Holerite;
 import br.com.api.repository.FuncionarioRepository;
@@ -22,7 +23,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,8 +67,7 @@ public class HoleriteControllerTest {
                 .accept(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(request)
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("funcionario").isNotEmpty());
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -89,8 +88,11 @@ public class HoleriteControllerTest {
     @DisplayName("Deve retornar uma lista de holerite buscado pelo CPF")
     public void deveRetornarListaHoleritePorCpf() throws Exception {
 
+        Cabecalho cabecalho = new Cabecalho();
+
         Holerite holerite = new Holerite();
         holerite.setId(1L);
+        holerite.setCabecalho(cabecalho);
 
         Funcionario funcionario = new Funcionario();
         holerite.setFuncionario(funcionario);
@@ -148,8 +150,7 @@ public class HoleriteControllerTest {
 
         mockMvc.perform(request)
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("id").value(1L))
-                .andExpect(jsonPath("funcionario").isNotEmpty());
+                .andExpect(jsonPath("id").value(1L));
 
     }
 }

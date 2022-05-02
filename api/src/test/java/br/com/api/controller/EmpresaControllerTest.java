@@ -69,8 +69,7 @@ public class EmpresaControllerTest {
         mockMvc.perform(request)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("cnpj").value("teste"))
-                .andExpect(jsonPath("razaoSocial").value("XP_INC"))
-                .andExpect(jsonPath("funcionarios").isNotEmpty());
+                .andExpect(jsonPath("razaoSocial").value("XP_INC"));
     }
 
     @Test
@@ -124,7 +123,6 @@ public class EmpresaControllerTest {
                 .andExpect(jsonPath("nome").value("Angela"))
                 .andExpect(jsonPath("funcao").value("Função teste"))
                 .andExpect(jsonPath("salario").value(15000))
-                .andExpect(jsonPath("empresa").isNotEmpty())
                 .andExpect(jsonPath("adicionalPericulosidade").isBoolean())
                 .andExpect(jsonPath("ajudaDeCusto").value(0));
     }
@@ -165,7 +163,6 @@ public class EmpresaControllerTest {
                 .andExpect(jsonPath("nome").value("Angela"))
                 .andExpect(jsonPath("funcao").value("Função teste"))
                 .andExpect(jsonPath("salario").value(15000))
-                .andExpect(jsonPath("empresa").isNotEmpty())
                 .andExpect(jsonPath("adicionalPericulosidade").isBoolean())
                 .andExpect(jsonPath("ajudaDeCusto").value(0));
     }
@@ -207,7 +204,6 @@ public class EmpresaControllerTest {
                 .andExpect(jsonPath("nome").value("Angela"))
                 .andExpect(jsonPath("funcao").value("Função teste"))
                 .andExpect(jsonPath("salario").value(15000))
-                .andExpect(jsonPath("empresa").isNotEmpty())
                 .andExpect(jsonPath("adicionalPericulosidade").isBoolean())
                 .andExpect(jsonPath("ajudaDeCusto").value(0));
     }
