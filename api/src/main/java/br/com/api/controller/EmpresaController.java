@@ -5,6 +5,7 @@ import br.com.api.dto.DTOFuncionarioCompleto;
 import br.com.api.dto.DTOFuncionarioSimples;
 import br.com.api.dto.FormCadastroFuncionario;
 import br.com.api.models.Empresa;
+import br.com.api.repository.EmpresaRepository;
 import br.com.api.models.Funcionario;
 
 import br.com.api.repository.EmpresaRepository;

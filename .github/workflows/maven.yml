@@ -24,3 +24,8 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file api/pom.xml
+    - name: Upload to Codecov
+      uses: codecov/codecov-action@v2.0.2
+      with:
+        file: ./api/target/site/jacoco/jacoco.xml
+        flags: unittests
