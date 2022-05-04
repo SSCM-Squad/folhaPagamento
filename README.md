@@ -1,4 +1,6 @@
 # folhaPagamentos
+[![Testes e Build do projeto](https://github.com/SSCM-Squad/folhaPagamento/actions/workflows/maven.yml/badge.svg)](https://github.com/SSCM-Squad/folhaPagamento/actions/workflows/maven.yml)
+[![codecov](https://codecov.io/gh/SSCM-Squad/folhaPagamento/branch/main/graph/badge.svg?token=D3V49G24W7)](https://codecov.io/gh/SSCM-Squad/folhaPagamento)
 
 ## Pré-requisitos
 * Java  - versão 17 ou mais recente
@@ -41,3 +43,4 @@ http://localhost:8080/swagger-ui.html#/
 <div align- "center">
 <img src="https://user-images.githubusercontent.com/52303788/166617220-59e053fa-e37f-40b8-a35d-7c8351e5b750.png" width="400px" />
 </div>
+
