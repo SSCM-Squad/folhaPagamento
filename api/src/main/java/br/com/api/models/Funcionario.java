@@ -33,6 +33,7 @@ public class Funcionario {
 
 	private BigDecimal valorPlanoDeSaude;
 
+	@Column(unique = true)
 	private String cpf;
 
 	@Enumerated(EnumType.STRING)

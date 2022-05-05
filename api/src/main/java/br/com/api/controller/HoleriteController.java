@@ -3,6 +3,8 @@ package br.com.api.controller;
 import br.com.api.dto.DTOConsultarHoleriteSimples;
 import br.com.api.dto.DTOFuncionarioSimples;
 import br.com.api.dto.DTOHoleriteCompleto;
+import br.com.api.exception.FuncionarioNaoEncontradoException;
+import br.com.api.exception.HoleriteGeradoException;
 import br.com.api.models.Funcionario;
 import br.com.api.models.Holerite;
 import br.com.api.repository.FuncionarioRepository;
@@ -78,11 +80,11 @@ public class HoleriteController {
 		Optional<Funcionario> funcionario = funcionarioRepository.findById(idFuncionario);
 
 		if(holeriteRepository.existsByCabecalhoDataAndFuncionarioId(data, idFuncionario)){
-			return ResponseEntity.badRequest().build();
+			throw new HoleriteGeradoException("O Holerite referente a essa data e funcionário já foi gerado!");
 		}
 
 		if (funcionario.isEmpty()) {
-			return ResponseEntity.notFound().build();
+			throw new FuncionarioNaoEncontradoException("Não existe funcionário com o código informado!");
 		}
 
 		Holerite holerite = serviceHolerite.gerarHolerite(funcionario.get(), data);
