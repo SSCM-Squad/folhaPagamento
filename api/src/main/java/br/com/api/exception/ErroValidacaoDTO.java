@@ -10,7 +10,4 @@ public class ErroValidacaoDTO {
         return erros;
     }
 
-    public void setErros(HashMap<String, String> erros) {
-        this.erros = erros;
-    }
 }

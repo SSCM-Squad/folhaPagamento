@@ -23,7 +23,7 @@ public class FormCadastroFuncionario {
     @NotNull @Positive
     private int jornadaDeTrabalho;
 
-    @NotNull @Positive
+    @NotNull @PositiveOrZero
     private int horasExtras;
 
     @PositiveOrZero @NotNull

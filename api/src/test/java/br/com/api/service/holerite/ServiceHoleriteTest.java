@@ -59,7 +59,6 @@ public class ServiceHoleriteTest {
        funcionario.setDependentes(3);
        funcionario.setAjudaDeCusto(BigDecimal.valueOf(500));
        funcionario.setValorPlanoDeSaude(BigDecimal.valueOf(800));
-       funcionario.setCpf("999.999.888-44");
        funcionario.setTipo(TipoFuncionario.COLABORADOR);
        funcionario.setEmpresa(empresa);
 
@@ -83,8 +82,6 @@ public class ServiceHoleriteTest {
 
         List<Detalhe> detalhes = holerite.getDetalhes().stream()
                 .filter(detalhe -> detalhe.getVencimento() != null).collect(Collectors.toList());
-
-
 
         Assertions.assertThat(detalhes.size()).isEqualTo(4);
     }

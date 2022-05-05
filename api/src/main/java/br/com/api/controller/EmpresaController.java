@@ -50,15 +50,15 @@ public class EmpresaController {
     }
 
     @GetMapping("/funcionario/cpf={cpf}")
-    public ResponseEntity<Funcionario> buscarFuncionarioPorCpf(@PathVariable String cpf){
+    public ResponseEntity<DTOFuncionarioCompleto> buscarFuncionarioPorCpf(@PathVariable String cpf){
 
         Optional<Funcionario> funcionario = funcionarioRepository.findByCpf(cpf);
 
         if(funcionario.isEmpty()){
-            return ResponseEntity.notFound().build();
+           throw new FuncionarioNaoEncontradoException("Não existe funcionário com o CPF informado");
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(funcionario.get());
+        return ResponseEntity.status(HttpStatus.OK).body(new DTOFuncionarioCompleto(funcionario.get()));
     }
 
     @GetMapping("/funcionarios")
