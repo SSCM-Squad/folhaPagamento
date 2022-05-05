@@ -80,6 +80,7 @@ public class EmpresaController {
         if (funcionarioOptional.isEmpty()) {
             throw new FuncionarioNaoEncontradoException("Não existe funcionário com o id informado!");
         }
+
         DTOFuncionarioCompleto dtoFuncionario = new DTOFuncionarioCompleto(funcionarioOptional.get());
 
         return ResponseEntity.status(HttpStatus.OK).body(dtoFuncionario);
