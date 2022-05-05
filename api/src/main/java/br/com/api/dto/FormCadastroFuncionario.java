@@ -1,33 +1,44 @@
 package br.com.api.dto;
 
-import br.com.api.models.Empresa;
 import br.com.api.models.Funcionario;
 import br.com.api.models.TipoFuncionario;
 
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 
 public class FormCadastroFuncionario {
 
+    @NotNull @NotEmpty
     private String nome;
 
+    @Positive
     private BigDecimal salario;
 
+    @NotNull @NotEmpty
     private String funcao;
 
+    @NotNull
     private boolean adicionalPericulosidade;
 
+    @NotNull @Positive
     private int jornadaDeTrabalho;
 
+    @NotNull @PositiveOrZero
     private int horasExtras;
 
+    @PositiveOrZero @NotNull
     private int dependentes;
 
+    @NotNull @PositiveOrZero
     private BigDecimal ajudaDeCusto;
 
+    @NotNull @PositiveOrZero
     private BigDecimal valorPlanoDeSaude;
 
+    @NotNull @Size(min = 11, max = 11)
     private String cpf;
 
+    @NotNull
     private TipoFuncionario tipoFuncionario;
 
     public String getNome() {

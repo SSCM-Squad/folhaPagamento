@@ -71,7 +71,7 @@ public class HoleriteControllerTest {
     }
 
     @Test
-    @DisplayName("Deve retornar um Not Found ao não encontrar um holerite")
+    @DisplayName("Deve retornar um Not Found ao não encontrar um holerite pelo ID")
     public void deveRetornarNotFound() throws Exception {
 
         BDDMockito.given(holeriteRepository.findById(anyLong())).willReturn(Optional.empty());
@@ -85,7 +85,7 @@ public class HoleriteControllerTest {
     }
 
     @Test
-    @DisplayName("Deve retornar uma lista de holerite buscado pelo CPF")
+    @DisplayName("Deve retornar uma lista de holerite para o CPF informado")
     public void deveRetornarListaHoleritePorCpf() throws Exception {
 
         Cabecalho cabecalho = new Cabecalho();
@@ -110,6 +110,24 @@ public class HoleriteControllerTest {
     }
 
     @Test
+    @DisplayName("Deve retornar not found ao não encontrar holerites para o CPF informado")
+    public void deveRetornarNotFoundAoListarHoleritesPorCpf() throws Exception {
+
+        List<Holerite> holerites = new ArrayList<>();
+
+        BDDMockito.given(holeriteRepository.findAllByFuncionarioCpf(anyString())).willReturn(holerites);
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .get(HOLERITE_URI +"/consultar-holerites/" + "1234")
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(request)
+                .andExpect(status().isNotFound());
+    }
+
+
+
+    @Test
     @DisplayName("Deve retornar um holerite buscado pelo CPF e data")
     public void deveRetornarHoleritePorCpfEData() throws Exception {
 
@@ -128,6 +146,20 @@ public class HoleriteControllerTest {
         mockMvc.perform(request)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id").value(1L));
+    }
+
+    @Test
+    @DisplayName("Deve retornar not found ao buscar holerite por CPF e data ")
+    public void deveRetornarErroAoBuscarHoleritePorCpfEData() throws Exception {
+
+        BDDMockito.given(holeriteRepository.buscarHolerite(anyString(), any(LocalDate.class))).willReturn(Optional.empty());
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .get(HOLERITE_URI +"/consultar-holerite/cpf=1234&data=2022-03-01")
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(request)
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -151,6 +183,43 @@ public class HoleriteControllerTest {
         mockMvc.perform(request)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id").value(1L));
+
+    }
+
+    @Test
+    @DisplayName("Deve retornar erro ao tentar gerar um holerite já criado")
+    public void deveRetornarErroAoGerarHolerite() throws Exception {
+
+        BDDMockito.given(holeriteRepository.existsByCabecalhoDataAndFuncionarioId(any(LocalDate.class), anyLong()))
+                .willReturn(true);
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .post(HOLERITE_URI +"/gerar-holerite/1&2022-03-01")
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(request)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("erro")
+                        .value("O Holerite referente a essa data e funcionário já foi gerado!"));
+
+    }
+
+    @Test
+    @DisplayName("Deve retornar erro ao tentar gerar um holerite para um funcionário inexistente")
+    public void deveRetornarErroAoGerarHoleriteFuncionario() throws Exception {
+
+        BDDMockito.given(holeriteRepository.existsByCabecalhoDataAndFuncionarioId(any(LocalDate.class), anyLong()))
+                .willReturn(false);
+        BDDMockito.given(funcionarioRepository.findById(anyLong())).willReturn(Optional.empty());
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .post(HOLERITE_URI +"/gerar-holerite/1&2022-03-01")
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(request)
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("erro")
+                        .value("Não existe funcionário com o código informado!"));
 
     }
 }
