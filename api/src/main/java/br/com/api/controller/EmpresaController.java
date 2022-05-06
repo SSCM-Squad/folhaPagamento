@@ -4,6 +4,7 @@ import br.com.api.dto.DTOEmpresa;
 import br.com.api.dto.DTOFuncionarioCompleto;
 import br.com.api.dto.DTOFuncionarioSimples;
 import br.com.api.dto.FormCadastroFuncionario;
+import br.com.api.exception.FuncionarioJaExistenteException;
 import br.com.api.exception.FuncionarioNaoEncontradoException;
 import br.com.api.models.Empresa;
 import br.com.api.repository.EmpresaRepository;
@@ -89,6 +90,9 @@ public class EmpresaController {
     @Transactional
     public ResponseEntity<DTOFuncionarioCompleto> cadastrarFuncionario(@RequestBody @Valid FormCadastroFuncionario
                                                                                    funcionarioFormulario) {
+        if(funcionarioRepository.existsByCpf(funcionarioFormulario.getCpf())){
+            throw new FuncionarioJaExistenteException("Esse funcionário já esta cadastro no sistema");
+        }
 
         Funcionario funcionarioModelo = funcionarioFormulario.converterFormularioParaEntidade();
 

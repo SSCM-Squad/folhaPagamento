@@ -49,4 +49,12 @@ public class ExceptionHandlerController {
         ErroDtoSimples dtoErro = new ErroDtoSimples(exception.getMessage());
         return dtoErro;
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(FuncionarioJaExistenteException.class)
+    public ErroDtoSimples handlerFuncionarioExistente(FuncionarioJaExistenteException exception) {
+
+        ErroDtoSimples dtoErro = new ErroDtoSimples(exception.getMessage());
+        return dtoErro;
+    }
 }
